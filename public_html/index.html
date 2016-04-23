@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+<head>
+
+	<title>4L Trophy</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<meta charset="UTF-8">
+	
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/leaflet.css">
+	
+	<script type="text/javascript" src="api/import?nocache=active"></script>
+	<script type="text/javascript" src="js/canvasjs.min.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/leaflet-src.js"></script>
+	
+
+
+
+	
+</head>
+<body>
+
+
+	<header>
+	</header>
+	
+	<aside>
+	
+	<ul>
+		<!--<li class="selected">
+			<a href="#!/chart">
+				<span class="icon icon-chart"></span>
+				<span class="label">Graphiques</span>
+			</a>
+		</li>-->
+		<li>
+			<a href="#!/map">
+				<span class="icon icon-map"></span>
+				<span class="label">Carte</span>
+			</a>
+		</li>
+		<li class="selected">
+			<a href="#!/photos">
+				<span class="icon icon-photo"></span>
+				<span class="label">Photos</span>
+			</a>
+		</li>
+		<li>
+			<a href="#!/share">
+				<span class="icon icon-rss"></span>
+				<span class="label">Partager</span>
+			</a>
+		</li>
+		<!--<li>
+			<a  id="gpio6">
+				<span class="icon icon-ray"></span>
+				<span class="label">GPIO</span>
+			</a>
+		</li>
+		<li>
+			<a href="#!/trophy">
+				<span class="icon icon-trophy"></span>
+				<span class="label">Hall of Fame</span>
+			</a>
+		</li>
+		-->
+
+	</ul>
+	
+	</aside>
+	
+	
+	
+	<section id="photos">
+		<div class="wrapper">
+
+			<div>
+	
+				<div class="col-1-1">
+				   <div class="tile">
+					   <div class="title">
+							<span>Viewer</span>
+							<span class="control">
+								<button onclick="takePicture();">Snap</button>
+							</span>
+						</div>	
+								
+						<div class="picture-container">
+							<div id="lastPicture">
+								<img id="lastPictureElement" class="preview" src="" alt="Aucune photo à afficher"/>
+							</div>
+							<div>
+								
+							</div>
+						</div>
+				   </div>
+				</div>
+
+			</div>
+			
+			<div class="clear"></div>
+			<div>
+	
+				<div class="col-1-1">
+				   <div class="tile">
+					   <div class="title">
+							<span>Galerie</span>
+							<span class="control">
+								<button onclick="current_page--; if(current_page < 0)current_page=0;refreshPictures();" >&lt;</button>
+								<button onclick="refreshPictures();" >&#8635;</button>
+								<button onclick="current_page++;refreshPictures();">&gt;</button>
+							</span>
+						</div>	
+								
+						<div id="photo-page" class="picture-container">
+
+							
+						</div>
+				   </div>
+				</div>
+
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	</section>
+	
+	<section id="share">
+		<div class="wrapper">
+
+			<div>
+	
+				<div class="col-1-1">
+				   <div class="tile">
+					   <div class="title">
+							<span>Tweeter</span>
+							<span class="control">
+								<button onclick="sendTweet()">Send</button>
+							</span>
+						</div>	
+								
+						<div class="picture-container">
+							<div id="sendPicture">
+								<img id="sendPictureElement" class="preview" src="" alt="Aucune photo séléctionée" />
+							</div>
+							<div>
+								<script>
+
+								</script>
+								<textarea placeholder="Votre tweet ici" maxlength="140" onkeyup="length()" onkeypress="length()" id="tweet"></textarea>
+								<div id="tweetLength">0 caractère</div>
+							</div>
+						</div>
+				   </div>
+				</div>
+
+			</div>
+			
+			<div class="clear"></div>
+
+		</div>
+	</section>
+	
+	<section id="map">
+		<div class="wrapper">
+
+			<div>
+	
+				<div class="col-1-1">
+				   <div class="tile">
+					   <div class="title">
+							<span>Carte</span>
+							<span id="speed" class="control">
+								-- km/h
+							</span>
+						</div>						   
+						<div id="map-container">
+							<div id="map-inner" style="width: 100% ; height:100%;"></div>
+						</div>
+				   </div>
+				</div>
+
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	</section>
+	
+	<section id="trophy">
+		<div class="wrapper">
+			<h3>HALL OF FAME</h3>
+			
+			<div>
+			
+				<div class="col-1-1">
+				   <div class="tile">
+						<div class="title">
+							TITLE
+						</div>
+						Work in progress
+				   </div>
+				</div>
+
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	</section>
+	
+	<section id="chart">
+		<div class="wrapper">
+			<h3>DONNÉES EN TEMPS RÉEL</h3>
+			
+			<div>
+			
+				<div class="col-1-2">
+				   <div class="tile">
+					   <div class="title">
+							<span>ADC0 (V)</span>
+							<select name="ADC0" class="control">
+								<option value="1M">1 minute</option>
+								<option value="15M">15 minutes</option>
+								<option value="1H">1 heure</option>
+								<option value="4H">4 heures</option>
+							</select>
+						</div>
+					   <div class="chart-container">
+							<div class="chart" id="chart_ADC0"></div>
+					   </div>
+				   </div>
+				</div>
+			
+				<div class="col-1-2">
+				   <div class="tile">
+					   <div class="title">
+							<span>ADC1 (V)</span>
+							<select name="ADC1" class="control">
+								<option value="1M">1 minute</option>
+								<option value="15M">15 minutes</option>
+								<option value="1H">1 heure</option>
+								<option value="4H">4 heures</option>
+							</select>
+						</div>
+					   <div class="chart-container">
+							<div class="chart" id="chart_ADC1"></div>
+					   </div>
+				   </div>
+				</div>
+
+			</div>
+			<div>
+			
+				<div class="col-1-2">
+				   <div class="tile">
+					   <div class="title">
+							<span>ADC2 (V)</span>
+							<select name="ADC2" class="control">
+								<option value="1M">1 minute</option>
+								<option value="15M">15 minutes</option>
+								<option value="1H">1 heure</option>
+								<option value="4H">4 heures</option>
+							</select>
+						</div>
+					   <div class="chart-container">
+							<div class="chart" id="chart_ADC2"></div>
+					   </div>
+				   </div>
+				</div>
+			
+				<div class="col-1-2">
+				   <div class="tile">
+					   <div class="title">
+							<span>ADC3 (V)</span>
+							<select name="ADC3" class="control">
+								<option value="1M">1 minute</option>
+								<option value="15M">15 minutes</option>
+								<option value="1H">1 heure</option>
+								<option value="4H">4 heures</option>
+							</select>
+						</div>
+					   <div class="chart-container">
+							<div class="chart" id="chart_ADC3"></div>
+					   </div>
+				   </div>
+				</div>
+
+			</div>
+
+			
+		<div class="clear"></div>
+
+
+		</div>
+		
+
+	
+	</section>
+	
+	<footer>
+	Application réalisée par Benjamin Chazelle et Benjamin Saugues, étudiants à Lyon 1
+	</footer>	
+
+       
+	
+</body>
+</html>
